@@ -3,81 +3,121 @@ package lesson05_loops;
 /**
  * ===== レッスン05: 繰り返し（ループ） =====
  *
- * 同じ処理を何度も繰り返す。
+ * 【目標】同じ処理を何度も繰り返す方法を学ぶ
  *
- * for文:       回数が決まっているとき
- * while文:     条件がtrueの間繰り返す
- * do-while文:  最低1回は実行してから条件をチェック
- * break:       ループを途中で抜ける
- * continue:    今の回をスキップして次の回へ
+ * 【for文】回数が決まっているとき
+ *   for (初期化; 条件; 更新) { 繰り返す処理; }
+ *   例: for (int i = 0; i < 5; i++) { ... }
+ *     ①初期化: int i = 0     → iを0から開始
+ *     ②条件:   i < 5         → iが5未満の間繰り返す
+ *     ③更新:   i++           → 毎回iを1増やす
+ *     → i=0, 1, 2, 3, 4 の5回実行される
+ *
+ * 【while文】条件がtrueの間繰り返す（回数が不定のとき向き）
+ *   while (条件) { 繰り返す処理; }
+ *
+ * 【do-while文】最低1回は実行してから条件チェック
+ *   do { 繰り返す処理; } while (条件);
+ *
+ * 【制御キーワード】
+ *   break    → ループを途中で完全に抜ける
+ *   continue → 今の回をスキップして次の回へ進む
+ *
+ * 【無限ループに注意！】
+ *   条件が永遠にtrueだとプログラムが止まらなくなる
+ *   while(true) や 更新忘れに注意
  */
 public class Loops {
 
     public static void main(String[] args) {
 
         // ========== for文 ==========
-        System.out.println("--- for文 ---");
-        // for (初期値; 条件; 更新) { ... }
-        for (int i = 1; i <= 5; i++) {
-            System.out.println("  " + i + "回目のループ");
-        }
+        // for (int i = 開始値; 条件; 更新) { ... }
+        //
+        // 実行の流れ:
+        //   ①初期化 → ②条件チェック → ③処理実行 → ④更新 → ②に戻る
+        //   条件がfalseになったらループ終了
+        //
+        // System.out.println("--- for文 ---");
+        // for (int i = 1; i <= 5; i++) {
+        //     System.out.println("  " + i + "回目のループ");
+        // }
+        // ↑ i=1→2→3→4→5 の5回実行。i=6になると条件 i<=5 がfalseで終了
 
         // ========== 合計を求める ==========
-        System.out.println("\n--- 1から10の合計 ---");
-        int sum = 0;
-        for (int i = 1; i <= 10; i++) {
-            sum += i;  // sum = sum + i
-        }
-        System.out.println("合計: " + sum);  // → 55
+        // ループの中で変数に値を足し続けるパターン（よく使う！）
+        //
+        // System.out.println("\n--- 1から10の合計 ---");
+        // int sum = 0;          // 合計用の変数を0で初期化
+        // for (int i = 1; i <= 10; i++) {
+        //     sum += i;         // sum = sum + i
+        //     // i=1: sum=1, i=2: sum=3, i=3: sum=6, ... i=10: sum=55
+        // }
+        // System.out.println("合計: " + sum);
 
         // ========== while文 ==========
-        System.out.println("\n--- while文 ---");
-        int count = 3;
-        while (count > 0) {
-            System.out.println("  カウントダウン: " + count);
-            count--;
-        }
-        System.out.println("  発射！");
+        // 条件がtrueの間ずっと繰り返す
+        // ループの中で条件が変わるようにしないと無限ループになる！
+        //
+        // System.out.println("\n--- while文 ---");
+        // int count = 3;
+        // while (count > 0) {         // countが0より大きい間繰り返す
+        //     System.out.println("  カウントダウン: " + count);
+        //     count--;                // countを1減らす（これがないと無限ループ！）
+        // }
+        // System.out.println("  発射！");
 
         // ========== do-while文 ==========
-        System.out.println("\n--- do-while文 ---");
-        int num = 1;
-        do {
-            System.out.println("  num = " + num);
-            num *= 2;
-        } while (num <= 16);
-        // 条件を後でチェックするので、最低1回は実行される
+        // while文との違い: 条件チェックが後なので、最低1回は必ず実行される
+        // メニュー表示など「まず1回やってから続けるか判断」したいときに使う
+        //
+        // System.out.println("\n--- do-while文 ---");
+        // int num = 1;
+        // do {
+        //     System.out.println("  num = " + num);
+        //     num *= 2;               // numを2倍にする
+        // } while (num <= 16);        // numが16以下の間繰り返す
+        // // num: 1→2→4→8→16→32(ここでループ終了)
 
-        // ========== break（ループを抜ける） ==========
-        System.out.println("\n--- break ---");
-        for (int i = 1; i <= 10; i++) {
-            if (i == 6) {
-                System.out.println("  6が見つかったのでループを終了！");
-                break;
-            }
-            System.out.println("  i = " + i);
-        }
+        // ========== break（ループを強制終了） ==========
+        // 特定の条件でループを途中で抜けたいときに使う
+        //
+        // System.out.println("\n--- break ---");
+        // for (int i = 1; i <= 10; i++) {
+        //     if (i == 6) {
+        //         System.out.println("  6が見つかったのでループを終了！");
+        //         break;              // ← ここでforループを完全に抜ける
+        //     }
+        //     System.out.println("  i = " + i);
+        // }
+        // // 出力: 1, 2, 3, 4, 5, "6が見つかった..."（6以降は表示されない）
 
-        // ========== continue（スキップ） ==========
-        System.out.println("\n--- continue（奇数だけ表示） ---");
-        for (int i = 1; i <= 10; i++) {
-            if (i % 2 == 0) {
-                continue;  // 偶数はスキップ
-            }
-            System.out.println("  i = " + i);
-        }
+        // ========== continue（今の回をスキップ） ==========
+        // breakと違い、ループは続く。今の回だけスキップして次の回へ
+        //
+        // System.out.println("\n--- continue（奇数だけ表示） ---");
+        // for (int i = 1; i <= 10; i++) {
+        //     if (i % 2 == 0) {
+        //         continue;           // ← 偶数のときはスキップして次のiへ
+        //     }
+        //     System.out.println("  i = " + i);
+        // }
+        // // 出力: 1, 3, 5, 7, 9（偶数はスキップされる）
 
-        // ========== 二重ループ ==========
-        System.out.println("\n--- 九九の一部（2の段） ---");
-        int dan = 2;
-        for (int j = 1; j <= 9; j++) {
-            System.out.println("  " + dan + " x " + j + " = " + (dan * j));
-        }
+        // ========== 二重ループ（ネストしたループ） ==========
+        // ループの中にループを書ける
+        // 外側が1回動くごとに、内側が最初から最後まで動く
+        //
+        // System.out.println("\n--- 九九の一部（2の段） ---");
+        // int dan = 2;
+        // for (int j = 1; j <= 9; j++) {
+        //     System.out.println("  " + dan + " x " + j + " = " + (dan * j));
+        // }
 
         // ===== 練習問題 =====
         // 1. 1から100までの偶数の合計を求めてみよう
-        // 2. 九九の表（1の段〜9の段）を全部表示してみよう
-        // 3. ★を使って以下の三角形を表示してみよう
+        // 2. 九九の表（1の段〜9の段）を全部表示してみよう（二重ループ）
+        // 3. ★を使って以下の三角形を表示してみよう（ヒント: 二重ループ）
         //    ★
         //    ★★
         //    ★★★
